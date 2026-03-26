@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Integración de vídeo web optimizado — UD03 Diseño de Interfaces Web." />
+  <meta name="author" content="Esteban Ospina" />
+  <title>Integración de Vídeo Web — UD03</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- =====================================================
+       CABECERA
+  ====================================================== -->
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <p class="header-label">UD03 · Diseño de Interfaces Web</p>
+      <h1 class="header-title">Integración de Vídeo Web</h1>
+      <p class="header-sub">Vídeo optimizado y convertido a MP4/WebM para máxima compatibilidad.</p>
+    </div>
+  </header>
+
+  <!-- =====================================================
+       CONTENIDO PRINCIPAL
+  ====================================================== -->
+  <main class="main-content" role="main" id="main-content">
+
+    <!-- ---------------------------------------------------
+         REPRODUCTOR DE VÍDEO
+         - controls: muestra play, pausa, volumen, barra
+         - preload="metadata": carga solo los metadatos
+         - poster: imagen de previsualización antes de play
+         - múltiples <source>: compatibilidad cross-browser
+    ---------------------------------------------------- -->
+    <section class="video-section" aria-label="Reproductor de vídeo">
+
+      <div class="video-wrapper">
+
+        <!-- Imagen de previsualización (poster) visible antes de reproducir -->
+        <!-- El atributo poster muestra esta imagen hasta que el usuario pulsa play -->
+        <video
+          class="video-player"
+          controls
+          preload="metadata"
+          poster="poster.jpg"
+          aria-label="Vídeo de demostración — usa los controles para reproducir"
+        >
+          <!-- Fuente principal: MP4 (H.264) — compatible con todos los navegadores -->
+          <source src="video.mp4" type="video/mp4" />
+
+          <!-- Fuente alternativa: WebM (VP9) — mejor compresión en Chrome/Firefox -->
+          <source src="video.webm" type="video/webm" />
+
+          <!-- Mensaje de fallback si el navegador no soporta <video> -->
+          <p>
+            Tu navegador no soporta reproducción de vídeo HTML5.
+            <a href="video.mp4">Descarga el vídeo aquí</a>.
+          </p>
+        </video>
+
+        <!-- Overlay decorativo que aparece al hacer hover -->
+        <div class="video-overlay" aria-hidden="true">
+          <div class="overlay-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <circle cx="12" cy="12" r="11" fill="rgba(0,0,0,.5)" />
+              <polygon points="10,8 16,12 10,16" fill="white"/>
+            </svg>
+          </div>
+        </div>
+
+      </div><!-- /.video-wrapper -->
+
+      <!-- Metadatos del vídeo -->
+      <div class="video-meta">
+        <div class="meta-item">
+          <span class="meta-label">Formato</span>
+          <span class="meta-value">MP4 (H.264) + WebM (VP9)</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Resolución</span>
+          <span class="meta-value">1280 × 720 px (720p)</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Framerate</span>
+          <span class="meta-value">30 FPS</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Compatibilidad</span>
+          <span class="meta-value">Chrome · Firefox · Safari · Edge</span>
+        </div>
+      </div>
+
+    </section><!-- /.video-section -->
+
+    <!-- ---------------------------------------------------
+         INFORMACIÓN — Proceso y compatibilidad
+    ---------------------------------------------------- -->
+    <section class="info-section" aria-labelledby="info-title">
+
+      <h2 class="info-title" id="info-title">Proceso de optimización</h2>
+
+      <div class="steps-grid">
+
+        <div class="step-card">
+          <div class="step-num" aria-hidden="true">01</div>
+          <h3>Archivo original</h3>
+          <p>Vídeo en formato <strong>.MOV</strong> (QuickTime). Alta calidad pero tamaño elevado y compatibilidad web limitada.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num" aria-hidden="true">02</div>
+          <h3>Optimización</h3>
+          <p>Compresión con <strong>HandBrake</strong>. Resolución ajustada a 720p, RF 24, codec H.264. Reducción de ~70% del tamaño sin pérdida visual perceptible.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num" aria-hidden="true">03</div>
+          <h3>Conversión</h3>
+          <p>Exportado a <strong>MP4</strong> (H.264) como formato principal y <strong>WebM</strong> (VP9) como alternativa de mejor compresión.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num" aria-hidden="true">04</div>
+          <h3>Compatibilidad</h3>
+          <p>Probado en <strong>Chrome 124</strong>, <strong>Firefox 125</strong> y <strong>Safari 17</strong> en escritorio y dispositivos móviles iOS/Android.</p>
+        </div>
+
+      </div><!-- /.steps-grid -->
+
+    </section><!-- /.info-section -->
+
+    <!-- ---------------------------------------------------
+         TABLA DE COMPATIBILIDAD
+    ---------------------------------------------------- -->
+    <section class="compat-section" aria-labelledby="compat-title">
+
+      <h2 class="compat-title" id="compat-title">Pruebas de compatibilidad</h2>
+
+      <div class="table-wrap" role="region" aria-label="Tabla de compatibilidad por navegador" tabindex="0">
+        <table class="compat-table">
+          <thead>
+            <tr>
+              <th scope="col">Navegador / Dispositivo</th>
+              <th scope="col">MP4 (H.264)</th>
+              <th scope="col">WebM (VP9)</th>
+              <th scope="col">Controles</th>
+              <th scope="col">Resultado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Chrome 124 — Windows</td>
+              <td class="ok">✓</td>
+              <td class="ok">✓</td>
+              <td class="ok">✓</td>
+              <td class="ok">OK</td>
+            </tr>
+            <tr>
+              <td>Firefox 125 — Windows</td>
+              <td class="ok">✓</td>
+              <td class="ok">✓</td>
+              <td class="ok">✓</td>
+              <td class="ok">OK</td>
+            </tr>
+            <tr>
+              <td>Safari 17 — macOS</td>
+              <td class="ok">✓</td>
+              <td class="warn">—</td>
+              <td class="ok">✓</td>
+              <td class="ok">OK</td>
+            </tr>
+            <tr>
+              <td>Edge 124 — Windows</td>
+              <td class="ok">✓</td>
+              <td class="ok">✓</td>
+              <td class="ok">✓</td>
+              <td class="ok">OK</td>
+            </tr>
+            <tr>
+              <td>Chrome — Android</td>
+              <td class="ok">✓</td>
+              <td class="ok">✓</td>
+              <td class="ok">✓</td>
+              <td class="ok">OK</td>
+            </tr>
+            <tr>
+              <td>Safari — iOS</td>
+              <td class="ok">✓</td>
+              <td class="warn">—</td>
+              <td class="ok">✓</td>
+              <td class="ok">OK</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="compat-note">
+        <strong>Nota:</strong> Safari no soporta WebM/VP9 de forma nativa, por eso el elemento
+        <code>&lt;video&gt;</code> incluye siempre la fuente MP4 como primera opción.
+        El navegador selecciona automáticamente el primer formato que soporta.
+      </p>
+
+    </section>
+
+  </main>
+
+  <!-- =====================================================
+       FOOTER
+  ====================================================== -->
+  <footer class="site-footer" role="contentinfo">
+    <p>Esteban Ospina · UD03 Diseño de Interfaces Web · DAW 2025</p>
+  </footer>
+
+</body>
+</html>
