@@ -1,0 +1,367 @@
+/* ============================================================
+   UD03 — Integración de Vídeo Web
+   Módulo: Diseño de Interfaces Web (DAW)
+   ============================================================ */
+
+/* ============================================================
+   1. VARIABLES
+   ============================================================ */
+:root {
+  --clr-bg:       #0d0d0d;
+  --clr-surface:  #161616;
+  --clr-border:   #2a2a2a;
+  --clr-text:     #e0e0e0;
+  --clr-mid:      #888;
+  --clr-dim:      #444;
+  --clr-accent:   #e8c547;      /* Amarillo cálido */
+  --clr-ok:       #4ade80;
+  --clr-warn:     #f97316;
+
+  --ff-display: 'Georgia', serif;
+  --ff-body:    system-ui, sans-serif;
+  --ff-mono:    'Courier New', monospace;
+
+  --max-w:     900px;
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --transition: 0.25s ease;
+}
+
+/* ============================================================
+   2. RESET BASE
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--ff-body);
+  background: var(--clr-bg);
+  color: var(--clr-text);
+  line-height: 1.7;
+}
+
+/* ============================================================
+   3. HEADER
+   ============================================================ */
+.site-header {
+  background: linear-gradient(135deg, #111 0%, #1a1500 100%);
+  border-bottom: 1px solid var(--clr-border);
+  padding: 3rem 2rem 2.5rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Línea acento superior */
+.site-header::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--clr-accent);
+}
+
+.header-inner { max-width: var(--max-w); margin: 0 auto; }
+
+.header-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--clr-accent);
+  margin-bottom: 0.75rem;
+}
+
+.header-title {
+  font-family: var(--ff-display);
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  color: #fff;
+  line-height: 1.2;
+  margin-bottom: 0.75rem;
+}
+
+.header-sub {
+  font-size: 0.95rem;
+  color: var(--clr-mid);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* ============================================================
+   4. LAYOUT
+   ============================================================ */
+.main-content {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 3rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+/* ============================================================
+   5. REPRODUCTOR DE VÍDEO
+   Criterio: Video integrado con controles + efectos CSS hover
+   ============================================================ */
+.video-section { display: flex; flex-direction: column; gap: 1.5rem; }
+
+/* Wrapper del vídeo — contiene el player y el overlay */
+.video-wrapper {
+  position: relative;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: #000;
+  border: 1px solid var(--clr-border);
+  /* Sombra dramática */
+  box-shadow: 0 20px 60px rgba(0,0,0,.8), 0 0 0 1px rgba(255,255,255,.05);
+  /* Transición del hover en el wrapper */
+  transition: box-shadow var(--transition), transform var(--transition);
+}
+
+/* HOVER en el wrapper — el reproductor "flota" */
+.video-wrapper:hover {
+  box-shadow:
+    0 28px 80px rgba(0,0,0,.9),
+    0 0 0 1px rgba(232,197,71,.3),
+    0 0 30px rgba(232,197,71,.08);
+  transform: translateY(-3px);
+}
+
+/* El elemento <video> ocupa todo el ancho del contenedor */
+.video-player {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* El cursor cambia para indicar interactividad */
+  cursor: pointer;
+  /* Transición de brillo al hover */
+  transition: filter var(--transition);
+}
+
+/* HOVER en el vídeo — ligero aumento de brillo */
+.video-player:hover {
+  filter: brightness(1.05);
+}
+
+/* Overlay que aparece al hacer hover — icono de play decorativo */
+.video-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Invisible por defecto */
+  opacity: 0;
+  transition: opacity var(--transition);
+  pointer-events: none;   /* No bloquea los controles del vídeo */
+}
+
+/* HOVER en el wrapper — aparece el overlay */
+.video-wrapper:hover .video-overlay {
+  opacity: 1;
+}
+
+.overlay-icon svg {
+  width: 72px;
+  height: 72px;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,.5));
+  transition: transform var(--transition);
+}
+
+.video-wrapper:hover .overlay-icon svg {
+  transform: scale(1.1);
+}
+
+/* Metadatos del vídeo */
+.video-meta {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.meta-item {
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-sm);
+  padding: 0.875rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  transition: border-color var(--transition);
+}
+
+.meta-item:hover { border-color: var(--clr-accent); }
+
+.meta-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--clr-dim);
+}
+
+.meta-value {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--clr-text);
+}
+
+/* ============================================================
+   6. SECCIÓN DE PASOS
+   ============================================================ */
+.info-title,
+.compat-title {
+  font-family: var(--ff-display);
+  font-size: 1.4rem;
+  color: #fff;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--clr-border);
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+}
+
+.step-card {
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  position: relative;
+  transition: border-color var(--transition), transform var(--transition);
+}
+
+.step-card:hover {
+  border-color: var(--clr-accent);
+  transform: translateY(-2px);
+}
+
+.step-num {
+  font-family: var(--ff-mono);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--clr-border);
+  line-height: 1;
+  margin-bottom: 0.75rem;
+  transition: color var(--transition);
+}
+
+.step-card:hover .step-num { color: var(--clr-accent); }
+
+.step-card h3 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.step-card p {
+  font-size: 0.85rem;
+  color: var(--clr-mid);
+  line-height: 1.65;
+}
+
+.step-card strong { color: var(--clr-text); }
+
+/* ============================================================
+   7. TABLA DE COMPATIBILIDAD
+   ============================================================ */
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-md);
+  margin-bottom: 1rem;
+}
+
+.compat-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.compat-table thead {
+  background: var(--clr-surface);
+  border-bottom: 1px solid var(--clr-border);
+}
+
+.compat-table th {
+  padding: 0.875rem 1.25rem;
+  text-align: left;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--clr-mid);
+  white-space: nowrap;
+}
+
+.compat-table td {
+  padding: 0.875rem 1.25rem;
+  border-bottom: 1px solid var(--clr-border);
+  color: var(--clr-text);
+}
+
+.compat-table tbody tr:last-child td { border-bottom: none; }
+
+/* HOVER en filas */
+.compat-table tbody tr {
+  transition: background var(--transition);
+}
+
+.compat-table tbody tr:hover {
+  background: var(--clr-surface);
+}
+
+/* Celdas de estado */
+.ok   { color: var(--clr-ok);   font-weight: 600; text-align: center; }
+.warn { color: var(--clr-warn); font-weight: 600; text-align: center; }
+
+/* Nota de compatibilidad */
+.compat-note {
+  font-size: 0.8rem;
+  color: var(--clr-mid);
+  line-height: 1.65;
+  padding: 1rem 1.25rem;
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--clr-accent);
+}
+
+.compat-note strong { color: var(--clr-text); }
+
+code {
+  font-family: var(--ff-mono);
+  font-size: 0.8em;
+  background: rgba(255,255,255,.06);
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: var(--clr-accent);
+}
+
+/* ============================================================
+   8. FOOTER
+   ============================================================ */
+.site-footer {
+  text-align: center;
+  padding: 2rem;
+  border-top: 1px solid var(--clr-border);
+  font-size: 0.75rem;
+  color: var(--clr-dim);
+  letter-spacing: 0.06em;
+}
+
+/* ============================================================
+   9. RESPONSIVO
+   ============================================================ */
+@media (max-width: 700px) {
+  .video-meta       { grid-template-columns: repeat(2, 1fr); }
+  .steps-grid       { grid-template-columns: 1fr; }
+  .main-content     { padding: 2rem 1.25rem; }
+}
+
+@media (max-width: 480px) {
+  .video-meta { grid-template-columns: 1fr 1fr; }
+  .site-header { padding: 2rem 1.25rem; }
+}
